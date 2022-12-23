@@ -1,5 +1,7 @@
 name: CI
 
+run-name: ${{ github.actor }} is testing out changed-files 🚀
+
 on:
   # Compare the preceeding commit of main -> to the current commit of the main branch.
   # (Note: To compare changes between the last pushed commit to the remote main branch set `since_last_remote_commit: true`)
@@ -44,7 +46,7 @@ jobs:
         uses: tj-actions/changed-files@v35
         with:
           files: |
-            Dockerfile
+            **/Dockerfile
       # Example 2
       # - name: Get changed files in the docs folder
       #   id: changed-files-specific
