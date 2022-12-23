@@ -40,6 +40,7 @@ jobs:
         uses: tj-actions/changed-files@v35
         with:
           dir_names: "true"
+          dir_names_max_depth: 1
 
       - name: List all changed-files with dir_names
         run: |
@@ -47,18 +48,11 @@ jobs:
             echo "$file was changed"
           done
 
-      - name: changed files using a list of files
-        id: changed-files-with-list
-        uses: tj-actions/changed-files@v35
-        with:
-          files: |
-            **/Dockerfile
-
-      - name: List all changed-files with dir_names
+      - name: Run a step if 00.cuda was modified
+        if: contains(steps.changed-files-dir-names.outputs.modified_files, '00.cuda')
         run: |
-          for file in ${{ steps.changed-files-with-list.outputs.all_changed_files }}; do
-            echo "$file was changed"
-          done
+          echo "00.cuda file has been modified."
+
       # Example 2
       # - name: Get changed files in the docs folder
       #   id: changed-files-specific
