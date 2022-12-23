@@ -39,8 +39,8 @@ jobs:
         with:
           dir_names: "true"
 
-      - name: Run changed-files with dir_names
-        id: changed-files-dir-names
+      - name: changed files using a list of files
+        id: changed-files-with-list
         uses: tj-actions/changed-files@v35
         with:
           files: |
