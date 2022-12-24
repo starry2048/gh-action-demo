@@ -116,13 +116,13 @@ jobs:
           echo vlabel="${vlabel}"
           labelout=$(echo "${vlabel}" | sed -z 's/\n/\\n/g')
           echo -e labelout="${labelout}"
-          echo 'LABELS_GH_ACT<<EOF' >> $GITHUB_ENV
-          curl https://example.com >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
+          echo 'LABELS_GH_ACT<<EOF' >> $GITHUB_OUTPUT
+          curl https://example.com >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
 
       - name: echo label0 t1
         run: |
-          echo "${{ env.LABELS_GH_ACT }}" 
+          echo "${{ steps.setlabel1.outputs.LABELS_GH_ACT }}" 
 
 # vlabel="${{ env.label }}"
 # echo vlabel="${vlabel}"
