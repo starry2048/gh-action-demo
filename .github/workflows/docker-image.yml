@@ -93,7 +93,14 @@ jobs:
         id: test-out1
         run: |
           echo "${{ steps.meta.outputs.labels }}"
-
+      - name: tmatrix
+        id: tmatrix
+        run: |
+          echo "matrix={\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}" >> $GITHUB_OUTPUT
+      - name: read matrix
+        run: |
+          echo "${{ fromJSON(steps.tmatrix.outputs.matrix) }}"
+      
       - name: setlabel1
         id: setlabel1
         env:
@@ -112,7 +119,7 @@ jobs:
 
       - name: echo label0 t1
         run: |
-          echo "${{ fromJSON(steps.setlabel2.outputs.json).out }}" 
+          echo "${{ steps.setlabel1.outputs.json }}" 
       # - name: t0
       #   env:
       #     label: |
