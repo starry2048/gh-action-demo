@@ -95,7 +95,7 @@ jobs:
           echo "${{ steps.meta.outputs.labels }}"
 
       - id: setlabel
-        run: echo "labels="--arg1="${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}"" >> $GITHUB_OUTPUT
+        run: echo "labels=--arg1=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}" >> $GITHUB_OUTPUT
       
       - name: echo label0
         run: echo "${{ steps.setlabel.outputs.labels }}"
