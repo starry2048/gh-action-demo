@@ -42,8 +42,18 @@ jobs:
         with:
           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
 
+      - name: Set current date as env variable
+        run: echo "BUILD_TIME=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+      - name: Echo current date
+        run: echo $BUILD_TIME # Gives "2022-12-11T01:42:20"
+      - name: 
+        run: timedatectl set-timezone Asia/Shanghai
 
-
+      - name: Set current date as env variable1
+        run: echo "BUILD_TIME=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+      - name: Echo current date1
+        run: echo $BUILD_TIME # Gives "2022-12-11T01:42:20"
+        
       - name: Run changed-files with dir_names
         id: changed-files-dir-names
         uses: tj-actions/changed-files@v35
