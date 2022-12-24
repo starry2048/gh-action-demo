@@ -112,7 +112,11 @@ jobs:
             org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
             org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
         run: |
-          echo "json=${label}" >> $GITHUB_OUTPUT
+          vlabel="${{ env.label }}"
+          echo vlabel="${vlabel}"
+          labelout=$(echo $vlabel | sed -z 's/\ /\n/g')
+          echo labelout=${labelout}
+          echo "json=${labelout}" >> $GITHUB_OUTPUT
 
       - name: echo label0 t1
         run: |
