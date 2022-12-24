@@ -112,8 +112,7 @@ jobs:
 
       - name: echo label0 t1
         run: |
-          echo "${{ steps.setlabel2.outputs.json }}" 
-          echo "${{ steps.setlabel2.outputs.json.out }}" 
+          echo "${{ fromJSON(steps.setlabel2.outputs.json).out }}" 
       # - name: t0
       #   env:
       #     label: |
