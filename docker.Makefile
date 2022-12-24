@@ -19,7 +19,7 @@ GIT_TAG                  ?= ${CURRENT_GIT_TAG}${GIT_STATUS}
 BUILD_FROM               ?=
 BUILD_FROM_FLAG           =
 ifneq ("$(BUILD_FROM)","")
-    BUILD_FROM_FLAG       = --build-arg "from=${BUILD_FROM}"
+	BUILD_FROM_FLAG       = --build-arg "from=${BUILD_FROM}"
 endif
 
 BUILD_PROGRESS           ?= auto
@@ -35,17 +35,24 @@ BUILD_PLATFORMS          ?=
 WITH_PUSH                ?= 
 # Setup buildx flags
 ifneq ("$(USE_BUILDX)","")
-    BUILD                     = buildx build
+	BUILD                     = buildx build
 
-    # Only set platforms flags if using buildx
-    ifneq ("$(BUILD_PLATFORMS)","")
-        PLATFORMS_FLAG            = --platform="$(BUILD_PLATFORMS)"
-    endif
+	# Only set platforms flags if using buildx
+	ifneq ("$(BUILD_PLATFORMS)","")
+		PLATFORMS_FLAG            = --platform="$(BUILD_PLATFORMS)"
+	endif
 
-    ifeq ("$(WITH_PUSH)","true")
-        PUSH_FLAG                 = --push
-        DOCKER_TAG_FLAG           = ${DOCKER_VERSION}
-    endif
+	ifeq ("$(WITH_PUSH)","true")
+		PUSH_FLAG                 = --push
+		DOCKER_TAG_FLAG           = ${DOCKER_VERSION}
+	endif
+endif
+
+LOAD_FLAG               ?=
+ifneq ("$(LOAD_FLAG)","")
+	ifeq ("$(PUSH_FLAG)","")
+		PUSH_FLAG = --load
+	endif
 endif
 
 # custom args
@@ -60,14 +67,13 @@ DOCKER_TAG_FLAG          ?= ${DOCKER_VERSION}_${GIT_TAG}_${BUILD_TIME_S}
 DOCKER_LABEL              = --label "con.version.git-tag=${GIT_TAG}" --label "con.version.build-time=${BUILD_TIME}" 
 
 DOCKER_BUILD              = DOCKER_BUILDKIT=1 \
-                            docker $(BUILD) \
-                                --progress=$(BUILD_PROGRESS) \
-                                --load \
-                                $(EXTRA_DOCKER_BUILD_FLAGS) \
-                                $(PLATFORMS_FLAG) \
-                                $(PUSH_FLAG) \
-                                ${DOCKER_LABEL} \
-                                -t $(DOCKER_FULL_NAME):$(DOCKER_TAG_FLAG) \
+							docker $(BUILD) \
+								--progress=$(BUILD_PROGRESS) \
+								$(EXTRA_DOCKER_BUILD_FLAGS) \
+								$(PLATFORMS_FLAG) \
+								$(PUSH_FLAG) \
+								${DOCKER_LABEL} \
+								-t $(DOCKER_FULL_NAME):$(DOCKER_TAG_FLAG) \
 								${BUILD_FROM_FLAG} ${DOCKER_FILE}
 
 # base args
@@ -90,7 +96,7 @@ BUILD_IMAGE_SUFFIX       ?=
 
 BUILD_FROM_FLAG           =
 ifneq ("$(BUILD_FROM)","")
-    BUILD_FROM_FLAG       = --build-arg "from=${BUILD_FROM}"
+	BUILD_FROM_FLAG       = --build-arg "from=${BUILD_FROM}"
 endif
 
 
