@@ -101,10 +101,12 @@ jobs:
             org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
             org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
         run: |
-          echo "labels=${{ env.label }}">> $GITHUB_OUTPUT
+          echo "labels=${{ toJSON(env.label) }}">> $GITHUB_OUTPUT
       
       - name: echo label0
         run: echo "${{ steps.setlabel.outputs.labels }}"
+      - name: echo label1
+        run: echo "${{ fromJSON(steps.setlabel.outputs.labels) }}"
       # - name: echo label
       #   run: echo "${{ fromJSON(steps.setlabel.outputs.labels) }}"
       # - name: echo label1
