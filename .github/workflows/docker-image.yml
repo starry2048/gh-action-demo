@@ -149,11 +149,10 @@ jobs:
           context: 01.gl/
           push: ${{ env.WITH_PUSH == 'true' }}
           labels: ${{ steps.setlabels.outputs.LABELS_GH_ACT }}
-          tags: |
-            ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl-dev
-          build-args: |
-            from=nvidia/cuda:11.7.0-cudnn8-devel-ubuntu20.04
-
+          tags: ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl-dev
+          build-args: from=nvidia/cuda:11.7.0-cudnn8-devel-ubuntu20.04
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           
       # - name: Run docker build / push
       #   # WITH_PUSH is used here to determine whether or not to add the --push flag
