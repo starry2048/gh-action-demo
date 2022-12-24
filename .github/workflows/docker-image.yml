@@ -116,7 +116,7 @@ jobs:
           echo vlabel="${vlabel}"
           labelout=$(echo $vlabel | sed -z 's/\ /\=/g')
           echo labelout=${labelout}
-          echo "json=${labelout}" >> $GITHUB_OUTPUT
+          echo "json="${labelout}"" >> $GITHUB_OUTPUT
 
       - name: echo label0 t1
         run: |
