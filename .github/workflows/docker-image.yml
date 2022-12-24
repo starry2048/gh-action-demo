@@ -112,7 +112,7 @@ jobs:
       #   run: |
       #     echo "labels=\"${{ join(env.label, '\n') }}\""
       - name: t1
-      - id: setlabel2
+        id: setlabel2
         env:
           label: |
             org.opencontainers.image.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
