@@ -20,7 +20,7 @@ env:
   DOCKER_ORG: ristar20
   DOCKER_REGISTRY: docker.io
   USE_BUILDX: 1
-  WITH_PUSH: true
+  WITH_PUSH: 
 
 jobs:
   build:
