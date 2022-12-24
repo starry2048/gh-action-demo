@@ -88,6 +88,10 @@ jobs:
         id: test-out
         run: |
           echo ${{ steps.meta.outputs.json }}
+
+      - name: test out1
+        id: test-out
+        run: |
           echo ${{ steps.meta.outputs.labels }}
       # -
       #   name: Set up QEMU
