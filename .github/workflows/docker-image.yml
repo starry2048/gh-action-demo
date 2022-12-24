@@ -117,7 +117,8 @@ jobs:
           labelout=$(echo "${vlabel}" | sed -z 's/\n/\\n/g')
           echo -e labelout="${labelout}"
           echo 'LABELS_GH_ACT<<EOF' >> $GITHUB_OUTPUT
-          curl https://example.com >> $GITHUB_OUTPUT
+          echo "ab=5" >> $GITHUB_OUTPUT
+          echo cd=6 >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
 
       - name: echo label0 t1
