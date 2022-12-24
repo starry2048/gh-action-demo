@@ -93,6 +93,15 @@ jobs:
         id: test-out1
         run: |
           echo "${{ steps.meta.outputs.labels }}"
+
+      - id: setlabel
+        run: echo "labels="${{ steps.meta.outputs.labels }}"" >> $GITHUB_OUTPUT
+      
+
+      - name: echo label
+        run: echo "${{ steps.setlabel.outputs.labels }}"
+      - name: echo label1
+        run: echo ${{ steps.setlabel.outputs.labels }}
       # -
       #   name: Set up QEMU
       #   uses: docker/setup-qemu-action@v2
@@ -107,7 +116,21 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: "01.gl/"
+          push: ${{ env.WITH_PUSH }}
+          labels: |
+            org.opencontainers.image.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
+            org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+            org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
+          tags: |
+            ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl-dev
 
+          
       # - name: Run docker build / push
       #   # WITH_PUSH is used here to determine whether or not to add the --push flag
       #   env:
