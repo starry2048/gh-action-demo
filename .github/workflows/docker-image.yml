@@ -113,13 +113,13 @@ jobs:
           echo vlabel=${vlabel}
           labelout=$(echo $vlabel | sed -z 's/\ $//;s/\ /\"\, \"/g;s/\"\, \"$/\ /;')
           echo labelout=${labelout}
-          json="{\"out\": [\"${labelout}\"]}"
+          json="[\"${labelout}\"]"
           echo json=$json
           echo "json=${json}" >> $GITHUB_OUTPUT
 
       - name: echo label0 t1
         run: |
-          echo "${{ fromJSON(steps.setlabel1.outputs.json).out }}" 
+          echo "${{ fromJSON(steps.setlabel1.outputs.json) }}" 
       # - name: t0
       #   env:
       #     label: |
