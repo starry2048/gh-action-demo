@@ -24,7 +24,10 @@ env:
   DOCKER_IMAGE_BASE: u20
   DOCKER_IMAGE_FULL_BASE: ristar20/u20
   USE_BUILDX: 1
-  WITH_PUSH: 
+  WITH_PUSH: false
+  la: |
+    qwe=1
+    asd=2
 
 jobs:
   # env_check:
@@ -109,17 +112,19 @@ jobs:
             org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
             org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
         run: |
-          vlabel="${{ env.label }}"
-          echo vlabel="${vlabel}"
-          labelout=$(echo $vlabel | sed -z 's/\ /\n/g')
-          echo labelout=${labelout}
-          json="[\"${labelout}\"]"
-          echo json=$json
-          echo "json=${labelout}" >> $GITHUB_OUTPUT
+          echo "json=${label}" >> $GITHUB_OUTPUT
 
       - name: echo label0 t1
         run: |
           echo "${{ steps.setlabel1.outputs.json }}" 
+
+# vlabel="${{ env.label }}"
+# echo vlabel="${vlabel}"
+# labelout=$(echo $vlabel | sed -z 's/\ /\n/g')
+# echo labelout=${labelout}
+# json="[\"${labelout}\"]"
+# echo json=$json
+# echo "json=${labelout}" >> $GITHUB_OUTPUT
 
       # - name: setlabel1
       #   id: setlabel1
@@ -177,14 +182,13 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: "01.gl/"
+          context: 01.gl/
           push: ${{ env.WITH_PUSH == 'true' }}
-          labels: |
-            org.opencontainers.image.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
-            org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
-            org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
+          labels: 
           tags: |
             ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl-dev
+          build-args: |
+            from=ubuntu:20.04
 
           
       # - name: Run docker build / push
