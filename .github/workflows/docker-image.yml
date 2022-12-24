@@ -152,7 +152,7 @@ jobs:
           tags: |
             ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl-dev
           build-args: |
-            from=nvidia/cuda:cuda11.7.0-cudnn8-devel-ubuntu20.04
+            from=nvidia/cuda:11.7.0-cudnn8-devel-ubuntu20.04
 
           
       # - name: Run docker build / push
