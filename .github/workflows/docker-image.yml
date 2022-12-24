@@ -95,7 +95,7 @@ jobs:
           echo "${{ steps.meta.outputs.labels }}"
 
       - id: setlabel
-        run: echo "labels=${{ toJSON(steps.meta.outputs.labels) }}" >> $GITHUB_OUTPUT
+        run: echo "labels="--arg1="${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}"" >> $GITHUB_OUTPUT
       
 
       - name: echo label
@@ -122,7 +122,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: "01.gl/"
-          push: ${{ env.WITH_PUSH }}
+          push: ${{ env.WITH_PUSH == 'true' }}
           labels: |
             org.opencontainers.image.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
             org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
