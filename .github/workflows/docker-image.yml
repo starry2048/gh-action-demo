@@ -99,9 +99,9 @@ jobs:
       
 
       - name: echo label
-        run: echo "${{ steps.setlabel.outputs.labels }}"
+        run: echo "${{ fromJSON(steps.setlabel.outputs.labels) }}"
       - name: echo label1
-        run: echo ${{ steps.setlabel.outputs.labels }}
+        run: echo ${{ fromJSON(steps.setlabel.outputs.labels) }}
       # -
       #   name: Set up QEMU
       #   uses: docker/setup-qemu-action@v2
