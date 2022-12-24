@@ -88,6 +88,7 @@ jobs:
         id: test-out
         run: |
           echo ${{ steps.meta.outputs.json }}
+          echo ${{ steps.meta.outputs.labels }}
       # -
       #   name: Set up QEMU
       #   uses: docker/setup-qemu-action@v2
@@ -111,7 +112,7 @@ jobs:
       #     BUILD_FROM: ubuntu:20.04
       #     DOCKER_FILE: 01.gl/
       #   run: |
-      #     make -f docker.Makefile
+      #     make -f docker.Makefile 
 
 
 
