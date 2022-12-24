@@ -1,13 +1,13 @@
-name: docker-CI
+name: docker-image-CI
 
-run-name: ${{ github.actor }} is testing out docker-image 🚀
+run-name: ${{ github.actor }} is building docker-image 🚀
 
 on:
   # Compare the preceeding commit of main -> to the current commit of the main branch.
   # (Note: To compare changes between the last pushed commit to the remote main branch set `since_last_remote_commit: true`)
   push:
-    # branches:
-    #   - main
+    branches:
+      - u20
   # Compare the last commit of main -> to the current commit of a PR branch. 
   # (Note: To compare changes between the last pushed commit to the remote PR branch set `since_last_remote_commit: true`)
   # pull_request:
@@ -24,10 +24,7 @@ env:
   DOCKER_IMAGE_BASE: u20
   DOCKER_IMAGE_FULL_BASE: ristar20/u20
   USE_BUILDX: 1
-  WITH_PUSH: false
-  la: |
-    qwe=1
-    asd=2
+  WITH_PUSH: true
 
 jobs:
   # env_check:
@@ -143,7 +140,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
     
       -
-        name: Build and push
+        name: Build and push ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl
         uses: docker/build-push-action@v3
         with:
           context: 01.gl/
