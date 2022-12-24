@@ -104,7 +104,7 @@ jobs:
         run: |
           vlabel="${{ env.label }}"
           echo vlabel=${vlabel}
-          labelout=$(echo $vlabel |sed -z 's/\n$//;s/\n/, /g;s/, $/\n/;')
+          labelout=$(echo $vlabel |sed -z 's/\n$//;s/\n/", "/g;s/", "$/\n/;')
           echo labelout=${labelout}
           json="{out: [\"${labelout}\"]}"
           echo json=$json
