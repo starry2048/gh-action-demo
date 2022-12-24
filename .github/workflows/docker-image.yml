@@ -115,7 +115,7 @@ jobs:
           echo labelout=${labelout}
           json="[\"${labelout}\"]"
           echo json=$json
-          echo "json=labelout" >> $GITHUB_OUTPUT
+          echo "json=${labelout}" >> $GITHUB_OUTPUT
 
       - name: echo label0 t1
         run: |
