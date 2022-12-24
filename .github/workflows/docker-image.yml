@@ -102,7 +102,14 @@ jobs:
             org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
         run: |
           echo "${{ join(env.label, '\n') }}"
-
+      - id: setlabel2
+        env:
+          label: |
+            org.opencontainers.image.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
+            org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+            org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
+        run: |
+          echo '${{ join(env.label, '\n') }}'
       - id: setlabel
         env:
           label: |
@@ -110,12 +117,11 @@ jobs:
             org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
             org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
         run: |
-          echo "labels=- ${{ join(env.label, '\n- ') }}">> $GITHUB_OUTPUT
+          echo "labels='${{ join(env.label, '\n') }}'">> $GITHUB_OUTPUT
       
       - name: echo label0
         run: echo "${{ steps.setlabel.outputs.labels }}"
-      - name: echo label1
-        run: echo "${{ fromJSON(steps.setlabel.outputs.labels) }}"
+
       # - name: echo label
       #   run: echo "${{ fromJSON(steps.setlabel.outputs.labels) }}"
       # - name: echo label1
