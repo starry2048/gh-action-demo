@@ -16,9 +16,10 @@ on:
 
 env:
   BUILD_PROGRESS: plain
-  BUILD_TYPE: official
-  DOCKER_ORG: ristar20
   DOCKER_REGISTRY: docker.io
+  DOCKER_ORG: ristar20
+  DOCKER_IMAGE_BASE: U20
+  DOCKER_IMAGE_FULL_BASE: ${DOCKER_ORG}/${DOCKER_IMAGE_BASE}
   USE_BUILDX: 1
   WITH_PUSH: 
 
@@ -30,6 +31,11 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+          
+      - name: test out
+        id: changed-files-dir-names
+        run: |
+          echo "DOCKER_IMAGE_FULL_BASE: ${DOCKER_IMAGE_FULL_BASE}"
 
       - name: Run changed-files with dir_names
         id: changed-files-dir-names
