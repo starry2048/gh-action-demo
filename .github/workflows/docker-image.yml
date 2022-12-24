@@ -95,7 +95,7 @@ jobs:
           echo "${{ steps.meta.outputs.labels }}"
 
       - id: setlabel
-        run: echo "labels="${{ steps.meta.outputs.labels }}"" >> $GITHUB_OUTPUT
+        run: echo "labels=${{ fromJSON(steps.meta.outputs.labels) }}" >> $GITHUB_OUTPUT
       
 
       - name: echo label
