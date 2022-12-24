@@ -127,6 +127,88 @@ jobs:
           echo "${{ env.LABELS_GH_ACT }}" 
           echo "${{ steps.setlabels.outputs.LABELS_GH_ACT }}" 
 
+      # - name: setlabel1
+      #   id: setlabel1
+      #   env:
+      #     label: |
+      #       org.opencontainers.image.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
+      #       org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+      #       org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
+      #   run: |
+      #     vlabel="${{ env.label }}"
+      #     echo vlabel="${vlabel}"
+      #     labelout=$(echo "${vlabel}" | sed -z 's/\n/\\n/g')
+      #     echo -e labelout="${labelout}"
+      #     echo 'LABELS_GH_ACT<<EOF' >> $GITHUB_OUTPUT
+      #     echo "ab=5" >> $GITHUB_OUTPUT
+      #     echo cd=6 >> $GITHUB_OUTPUT
+      #     echo 'EOF' >> $GITHUB_OUTPUT
+
+      # - name: echo label0 t1
+      #   run: |
+      #     echo "${{ steps.setlabel1.outputs.LABELS_GH_ACT }}" 
+
+# vlabel="${{ env.label }}"
+# echo vlabel="${vlabel}"
+# labelout=$(echo $vlabel | sed -z 's/\ /\n/g')
+# echo labelout=${labelout}
+# json="[\"${labelout}\"]"
+# echo json=$json
+# echo "json=${labelout}" >> $GITHUB_OUTPUT
+
+      # - name: set label env
+      #   id: setlabelenv
+      #   env:
+      #     label: |
+      #       org.opencontainers.image.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
+      #       org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+      #       org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
+      #   run: |
+      #     vlabel="${{ env.label }}"
+      #     echo vlabel="${vlabel}"
+      #     labelout=$(echo $vlabel | sed -z 's/ $//;s/\ /\"\, \"/g;s/\"\, \"$/\ /;')
+      #     echo labelout=${labelout}
+      #     json="[\"${labelout}\"]"
+      #     echo json=$json
+      #     echo "json=${json}" >> $GITHUB_OUTPUT
+
+      # - name: setlabel1
+      #   id: setlabel1
+      #   env:
+      #     label: |
+      #       org.opencontainers.image.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
+      #       org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+      #       org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
+      #   run: |
+      #     vlabel="${{ env.label }}"
+      #     echo vlabel="${vlabel}"
+      #     labelout=$(echo $vlabel | sed -z 's/ $//;s/\ /\"\, \"/g;s/\"\, \"$/\ /;')
+      #     echo labelout=${labelout}
+      #     json="[\"${labelout}\"]"
+      #     echo json=$json
+      #     echo "json=${json}" >> $GITHUB_OUTPUT
+
+      # - name: echo label0 t1
+      #   run: |
+      #     echo "${{ fromJSON(steps.setlabel1.outputs.json) }}" 
+
+
+      # - id: setlabel
+      #   env:
+      #     label: |
+      #       org.opencontainers.image.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
+      #       org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+      #       org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
+      #   run: |
+      #     echo "labels=\"${{ join(env.label, '\n') }}\"">> $GITHUB_OUTPUT
+      
+      # - name: echo label0
+      #   run: echo "${{ fromJSON(steps.setlabel.outputs.labels) }}"
+
+      # - name: echo label
+      #   run: echo "${{ fromJSON(steps.setlabel.outputs.labels) }}"
+      # - name: echo label1
+      #   run: echo ${{ fromJSON(steps.setlabel.outputs.labels) }}
       # -
       #   name: Set up QEMU
       #   uses: docker/setup-qemu-action@v2
@@ -152,7 +234,7 @@ jobs:
           tags: |
             ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl-dev
           build-args: |
-            from=nvidia/cuda:cuda11.7-cudnn8-devel-ubuntu20.04
+            from=ubuntu:20.04
 
           
       # - name: Run docker build / push
