@@ -115,8 +115,8 @@ jobs:
           vlabel="${{ env.label }}"
           echo vlabel="${vlabel}"
           labelout=$(echo "${vlabel}" | sed -z 's/\n/\\n/g')
-          echo labelout="${labelout}"
-          echo "json="${labelout}"" >> $GITHUB_OUTPUT
+          echo -e labelout="${labelout}"
+          echo -e "json="${labelout}"" >> $GITHUB_OUTPUT
 
       - name: echo label0 t1
         run: |
