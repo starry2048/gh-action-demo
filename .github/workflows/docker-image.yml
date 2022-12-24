@@ -64,6 +64,9 @@ jobs:
         name: Docker meta
         uses: docker/metadata-action@v4
         id: meta
+        with:
+          images: |
+            name=,enable=false
 
       - name: test out
         id: test-out
