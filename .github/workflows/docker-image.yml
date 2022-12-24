@@ -133,7 +133,7 @@ jobs:
           echo "labels=\"${{ join(env.label, '\n') }}\"">> $GITHUB_OUTPUT
       
       - name: echo label0
-        run: echo "${{ steps.setlabel.outputs.labels }}"
+        run: echo "${{ fromJSON(steps.setlabel.outputs.labels) }}"
 
       # - name: echo label
       #   run: echo "${{ fromJSON(steps.setlabel.outputs.labels) }}"
