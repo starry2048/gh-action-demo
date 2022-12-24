@@ -52,7 +52,7 @@ jobs:
         with:
           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
 
-      - name: Echo current date
+      - name: Echo current time
         run: echo $BUILD_TIME # Gives "2022-12-11T01:42:20"
 
       - name: Echo current env
