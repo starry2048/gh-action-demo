@@ -95,14 +95,18 @@ jobs:
           echo "${{ steps.meta.outputs.labels }}"
 
       - id: setlabel
-        run: echo "labels=--arg1=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}" >> $GITHUB_OUTPUT
+        env: 
+        run: |
+          echo 'labels<<EOF' >> $GITHUB_OUTPUT
+          org.opencontainers.image.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }} >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
       
       - name: echo label0
         run: echo "${{ steps.setlabel.outputs.labels }}"
-      - name: echo label
-        run: echo "${{ fromJSON(steps.setlabel.outputs.labels) }}"
-      - name: echo label1
-        run: echo ${{ fromJSON(steps.setlabel.outputs.labels) }}
+      # - name: echo label
+      #   run: echo "${{ fromJSON(steps.setlabel.outputs.labels) }}"
+      # - name: echo label1
+      #   run: echo ${{ fromJSON(steps.setlabel.outputs.labels) }}
       # -
       #   name: Set up QEMU
       #   uses: docker/setup-qemu-action@v2
