@@ -92,7 +92,7 @@ jobs:
       - name: test out1
         id: test-out1
         run: |
-          echo "${{ steps.meta.outputs.labels }}"
+          echo ${{ steps.meta.outputs.labels }}
       # -
       #   name: Set up QEMU
       #   uses: docker/setup-qemu-action@v2
