@@ -68,7 +68,7 @@ jobs:
         id: meta
         with:
           images: |
-            name=,enable=true
+            name/app
           tags: |
             type=schedule
             type=semver,pattern={{version}}
