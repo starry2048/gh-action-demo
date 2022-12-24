@@ -90,7 +90,7 @@ jobs:
           echo ${{ steps.meta.outputs.json }}
 
       - name: test out1
-        id: test-out
+        id: test-out1
         run: |
           echo ${{ steps.meta.outputs.labels }}
       # -
