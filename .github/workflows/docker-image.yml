@@ -127,12 +127,12 @@ jobs:
           echo "${{ env.LABELS_GH_ACT }}" 
           echo "${{ steps.setlabels.outputs.LABELS_GH_ACT }}" 
 
-      # -
-      #   name: Set up QEMU
-      #   uses: docker/setup-qemu-action@v2
-      # -
-      #   name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v2
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
       -
         name: Login to Docker Hub
