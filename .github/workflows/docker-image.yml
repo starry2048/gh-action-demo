@@ -94,14 +94,14 @@ jobs:
         run: |
           echo "${{ steps.meta.outputs.labels }}"
 
-      - id: setlabel1
+      - name: setlabel1
         env:
           label: |
             org.opencontainers.image.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
             org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
             org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
         run: |
-          echo "${{ join(env.label, '\n') }}"
+          echo "${{ join(env.label) }}"
       
       # - name: t0
       #   env:
