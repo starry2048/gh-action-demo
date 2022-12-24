@@ -116,11 +116,13 @@ jobs:
           echo vlabel="${vlabel}"
           labelout=$(echo "${vlabel}" | sed -z 's/\n/\\n/g')
           echo -e labelout="${labelout}"
-          echo "json=[a,b,c]" >> $GITHUB_OUTPUT
+          echo 'LABELS_GH_ACT<<EOF' >> $GITHUB_ENV
+          curl https://example.com >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
 
       - name: echo label0 t1
         run: |
-          echo "${{ steps.setlabel1.outputs.json }}" 
+          echo "${{ env.LABELS_GH_ACT }}" 
 
 # vlabel="${{ env.label }}"
 # echo vlabel="${vlabel}"
@@ -129,6 +131,22 @@ jobs:
 # json="[\"${labelout}\"]"
 # echo json=$json
 # echo "json=${labelout}" >> $GITHUB_OUTPUT
+
+      # - name: set label env
+      #   id: setlabelenv
+      #   env:
+      #     label: |
+      #       org.opencontainers.image.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
+      #       org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+      #       org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
+      #   run: |
+      #     vlabel="${{ env.label }}"
+      #     echo vlabel="${vlabel}"
+      #     labelout=$(echo $vlabel | sed -z 's/ $//;s/\ /\"\, \"/g;s/\"\, \"$/\ /;')
+      #     echo labelout=${labelout}
+      #     json="[\"${labelout}\"]"
+      #     echo json=$json
+      #     echo "json=${json}" >> $GITHUB_OUTPUT
 
       # - name: setlabel1
       #   id: setlabel1
@@ -182,17 +200,17 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      -
-        name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          context: 01.gl/
-          push: ${{ env.WITH_PUSH == 'true' }}
-          labels: 
-          tags: |
-            ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl-dev
-          build-args: |
-            from=ubuntu:20.04
+      # -
+      #   name: Build and push
+      #   uses: docker/build-push-action@v3
+      #   with:
+      #     context: 01.gl/
+      #     push: ${{ env.WITH_PUSH == 'true' }}
+      #     labels: 
+      #     tags: |
+      #       ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl-dev
+      #     build-args: |
+      #       from=ubuntu:20.04
 
           
       # - name: Run docker build / push

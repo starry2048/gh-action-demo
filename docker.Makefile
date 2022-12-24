@@ -15,6 +15,20 @@ GIT_STATUS               ?= $(shell git diff --quiet || echo '-dev')
 CURRENT_GIT_TAG          ?= $(shell git describe --tags --always)
 GIT_TAG                  ?= ${CURRENT_GIT_TAG}${GIT_STATUS}
 
+LABELS_GH_ACT			?=
+ifneq ("${LABELS_GH_ACT}","")
+LABELS_GH_ACT_FLAG=--label ${LABELS_GH_ACT}
+endif
+# LABEL_CREATE		 ?=
+# LABEL_VERSION		 ?=
+# LABEL_REVISION	     ?=
+# LABELS_FLAG_0=--label $(cat<<EOF
+# org.con.image.created=${LABEL_CREATE}
+# org.con.image.version=${LABEL_VERSION}
+# org.con.image.revision=${LABEL_REVISION}
+# EOF
+# )
+
 # build args
 BUILD_FROM               ?=
 BUILD_FROM_FLAG           =
@@ -64,7 +78,7 @@ DOCKER_FULL_NAME         ?= $(DOCKER_REGISTRY)/$(DOCKER_ORG)/$(DOCKER_IMAGE_BASE
 DOCKER_TAG_FLAG          ?= ${DOCKER_VERSION}_${GIT_TAG}_${BUILD_TIME_S}
 
 
-DOCKER_LABEL              = --label "con.version.git-tag=${GIT_TAG}" --label "con.version.build-time=${BUILD_TIME}" 
+DOCKER_LABEL              = ${LABELS_GH_ACT_FLAG} --label "con.version.git-tag=${GIT_TAG}" --label "con.version.build-time=${BUILD_TIME}" 
 
 DOCKER_BUILD              = DOCKER_BUILDKIT=1 \
 							docker $(BUILD) \
