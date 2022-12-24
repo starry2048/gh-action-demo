@@ -13,6 +13,8 @@ on:
   # pull_request:
     # branches:
     #   - main
+  workflow_dispatch:
+
 
 env:
   # BUILD_PROGRESS: plain
@@ -66,7 +68,15 @@ jobs:
         id: meta
         with:
           images: |
-            name=,enable=false
+            name=,enable=true
+          tags: |
+            type=schedule
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha
 
       - name: test out
         id: test-out
