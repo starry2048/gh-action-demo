@@ -224,17 +224,17 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      # -
-      #   name: Build and push
-      #   uses: docker/build-push-action@v3
-      #   with:
-      #     context: 01.gl/
-      #     push: ${{ env.WITH_PUSH == 'true' }}
-      #     labels: 
-      #     tags: |
-      #       ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl-dev
-      #     build-args: |
-      #       from=ubuntu:20.04
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: 01.gl/
+          push: ${{ env.WITH_PUSH == 'true' }}
+          labels: ${{ steps.setlabel1.outputs.LABELS_GH_ACT }}
+          tags: |
+            ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl-dev
+          build-args: |
+            from=ubuntu:20.04
 
           
       # - name: Run docker build / push
