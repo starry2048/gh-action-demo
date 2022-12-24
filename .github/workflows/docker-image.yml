@@ -119,7 +119,7 @@ jobs:
 
       - name: echo label0 t1
         run: |
-          echo "${{ fromJSON(steps.setlabel1.outputs.json) }}" 
+          echo "${{ fromJSON(steps.setlabel1.outputs.json).out }}" 
       # - name: t0
       #   env:
       #     label: |
