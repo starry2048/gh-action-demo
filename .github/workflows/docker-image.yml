@@ -18,12 +18,20 @@ env:
   BUILD_PROGRESS: plain
   DOCKER_REGISTRY: docker.io
   DOCKER_ORG: ristar20
-  DOCKER_IMAGE_BASE: U20
-  DOCKER_IMAGE_FULL_BASE: "${{ env.DOCKER_ORG }}/${{ env.DOCKER_IMAGE_BASE }}"
+  DOCKER_IMAGE_BASE: u20
+  DOCKER_IMAGE_FULL_BASE: ristar20/u20
   USE_BUILDX: 1
   WITH_PUSH: 
 
 jobs:
+  # env_check:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     output1: ${{ steps.step1.outputs.image_base }}
+  #   steps:
+  #     - id: step1
+  #       run:  echo "::set-output name=test::hello"
+
   build:
     runs-on: ubuntu-latest  # windows-latest | macos-latest
     name: Test changed-files
