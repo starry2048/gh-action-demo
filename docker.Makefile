@@ -100,7 +100,7 @@ ifneq ("$(BUILD_FROM)","")
 endif
 
 
-DO_BUILD				  =${DO_TEST_FLAG} ${DOCKER_BUILD}
+DO_BUILD				  =echo "${DOCKER_BUILD}\n" && ${DOCKER_BUILD}
 
 
 # DO_TEST_FLAG=echo
