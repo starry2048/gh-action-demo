@@ -95,7 +95,6 @@ jobs:
           echo "${{ steps.meta.outputs.labels }}"
 
       - id: setlabel
-        env: 
         run: |
           echo 'labels<<EOF' >> $GITHUB_OUTPUT
           org.opencontainers.image.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }} >> $GITHUB_OUTPUT
