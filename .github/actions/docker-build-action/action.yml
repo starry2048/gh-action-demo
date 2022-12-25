@@ -32,7 +32,7 @@ outputs:
     value: ${{ inputs.tags }}
   build_flag:
     description: 'build_flag'
-    value: ${{ steps.check-arg.outputs.build_flag }}
+    value: ${{ steps.check-build.outputs.build_flag }}
   
 runs:
   using: "composite"
@@ -57,9 +57,10 @@ runs:
 
         context_folder=$(echo "${{inputs.context}}" | sed 's/\/$//')
         echo "context_folder="${context_folder}"" >> $GITHUB_OUTPUT
-
-
-        echo contain_flag="${{ contains(env.GH_ACT_MODIFIED_FILES, ${context_folder}) }}""
+      shell: bash
+    - id: check-build
+      run: |
+        echo contain_flag="${{ contains(env.GH_ACT_MODIFIED_FILES, steps.check-arg.outputs.context_folder ) }}""
 
         echo env.GH_ACT_MODIFIED_FILES="${{env.GH_ACT_MODIFIED_FILES}}"
         echo context_folder="${context_folder}"
@@ -69,7 +70,6 @@ runs:
         [ "${BUILD_FLAG}" != "true" ] ||  echo "✅ build image"
         [ "${BUILD_FLAG}" == "true" ] ||  echo "❌ not build image"
       shell: bash
-
     - run: |
         echo context_folder="${{ steps.check-arg.outputs.context_folder }}"
         echo build_flag="${{ steps.check-arg.outputs.build_flag }}"
