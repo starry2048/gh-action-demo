@@ -66,10 +66,10 @@ jobs:
             echo "$file was changed"
           done
 
-      - name: 00.cuda
-        if: contains(steps.changed-files-dir-names.outputs.modified_files, '00.cuda')
-        run: |
-          echo "00.cuda file has been modified."
+      # - name: 00.cuda
+      #   if: contains(steps.changed-files-dir-names.outputs.modified_files, '00.cuda')
+      #   run: |
+      #     echo "00.cuda file has been modified."
 
       -
         name: Docker meta
@@ -99,6 +99,14 @@ jobs:
           echo 'GH_ACT_LAEBLS<<EOF' >> $GITHUB_OUTPUT
           echo "${vlabel}" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
+
+          {
+            echo "GH_ACT_META_JSON="${{ steps.meta.outputs.json }}"";
+          } >> "${GITHUB_ENV}"
+
+          echo 'GH_ACT_MODIFIED_FILES<<EOF' >> $GITHUB_ENV
+          echo "${{ steps.changed-files-dir-names.outputs.modified_files }}" >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
 
       - name: echo labels
         run: |
