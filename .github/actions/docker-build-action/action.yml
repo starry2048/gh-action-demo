@@ -50,11 +50,12 @@ runs:
          echo "context_folder="${context_folder}"" >> $GITHUB_OUTPUT
       shell: bash
     
-    - run: |
-        echo "${{ steps.check-arg.outputs.context_folder }}"
-      shell: bash
+    # - run: |
+    #     echo "${{ steps.check-arg.outputs.context_folder }}"
+    #   shell: bash
 
     - id: build-and-push
+      name: docker/build-push-action
       uses: docker/build-push-action@v3
       if: contains(steps.changed-files-dir-names.outputs.modified_files, steps.check-arg.outputs.context_folder)
       with:
