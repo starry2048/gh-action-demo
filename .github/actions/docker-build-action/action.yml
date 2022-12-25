@@ -52,6 +52,7 @@ runs:
     
     - run: |
         echo "${{ steps.check-arg.outputs.context_folder }}"
+      shell: bash
 
     - id: build-and-push
       uses: docker/build-push-action@v3
