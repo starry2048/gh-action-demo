@@ -132,17 +132,22 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-    
       -
-        uses: docker/build-push-action@v3
+        uses: ./.github/actions/docker-build-action
         with:
-          push: ${{ env.WITH_PUSH == 'true' }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          labels: ${{ steps.setlabels.outputs.GH_ACT_LAEBLS }}
           context: 01.gl/
           tags: ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl
-          build-args: from=nvidia/cuda:11.7.0-cudnn8-devel-ubuntu20.04
+          build-from: nvidia/cuda:11.7.0-cudnn8-devel-ubuntu20.04
+      # -
+      #   uses: docker/build-push-action@v3
+      #   with:
+      #     push: ${{ env.WITH_PUSH == 'true' }}
+      #     cache-from: type=gha
+      #     cache-to: type=gha,mode=max
+      #     labels: ${{ steps.setlabels.outputs.GH_ACT_LAEBLS }}
+      #     context: 01.gl/
+      #     tags: ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl
+      #     build-args: from=nvidia/cuda:11.7.0-cudnn8-devel-ubuntu20.04
           
       # - name: Run docker build / push
       #   # WITH_PUSH is used here to determine whether or not to add the --push flag

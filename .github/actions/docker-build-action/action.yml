@@ -27,7 +27,7 @@ runs:
         exit 1
       shell: bash
     
-    - run: echo "Prepare to build image with tags: ${{}}"
+    - run: echo "Prepare to build image with tags: ${{ inputs.tags }}"
       shell: bash
 
     - id: check-arg
