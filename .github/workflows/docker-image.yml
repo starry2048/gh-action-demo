@@ -39,9 +39,9 @@ jobs:
     runs-on: ubuntu-latest  # windows-latest | macos-latest
     name: Test changed-files
     steps:
-      - name: check time
-        run: |
-          echo "now: $(date +'%Y-%m-%dT%H:%M:%S')"
+      # - name: check time
+      #   run: |
+      #     echo "now: $(date +'%Y-%m-%dT%H:%M:%S')"
 
       - name: Set timezone and set current date as env variable
         run: |
@@ -52,11 +52,12 @@ jobs:
         with:
           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
 
-      - name: Echo current time
-        run: echo $BUILD_TIME # Gives "2022-12-11T01:42:20"
-
-      - name: Echo current env
-        run: env
+      # Gives "2022-12-11T01:42:20"
+      - name: Echo current time and env
+        run: |
+          echo $BUILD_TIME 
+          echo ------------------------------------
+          env
 
       - name: Run changed-files with dir_names
         id: changed-files-dir-names

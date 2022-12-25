@@ -46,7 +46,7 @@ runs:
          [ "${{ inputs.build-from }}" != "" ] ||  echo "from_flag=" >> $GITHUB_OUTPUT
          [ "${{ inputs.build-from }}" == "" ] ||  echo "from_flag=from=${{ inputs.build-from }}" >> $GITHUB_OUTPUT
 
-         context_folder=$(echo "${{inputs.context}}" | s/\/$//)
+         context_folder=$(echo "${{inputs.context}}" | sed -z 's/\/$//')
          echo "context_folder="${context_folder}"" >> $GITHUB_OUTPUT
       shell: bash
     
