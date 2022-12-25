@@ -13,7 +13,10 @@ inputs:
     description: 'build from'
     required: false
     default: ''
-# outputs: ${{ steps.build-and-push.outputs }}
+  force-build:
+    description: 'whether force build image'
+    required: false
+    default: false
 outputs:
   imageid:
     description: 'Image ID'
@@ -57,7 +60,7 @@ runs:
     - id: build-and-push
       name: docker/build-push-action
       uses: docker/build-push-action@v3
-      if: contains(steps.changed-files-dir-names.outputs.modified_files, steps.check-arg.outputs.context_folder)
+      if: inputs.force-build || contains(steps.changed-files-dir-names.outputs.modified_files, steps.check-arg.outputs.context_folder)
       with:
         push: ${{ env.WITH_PUSH == 'true' }}
         cache-from: type=gha
