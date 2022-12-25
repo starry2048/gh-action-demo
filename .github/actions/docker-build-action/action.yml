@@ -43,8 +43,8 @@ runs:
 
     - id: check-arg
       run: |
-         [ "${{ inputs.build-from }}" != "" ] ||  echo "from=" >> $GITHUB_OUTPUT
-         [ "${{ inputs.build-from }}" == "" ] ||  echo "from=${{ inputs.build-from }}" >> $GITHUB_OUTPUT
+         [ "${{ inputs.build-from }}" != "" ] ||  echo "from_flag=" >> $GITHUB_OUTPUT
+         [ "${{ inputs.build-from }}" == "" ] ||  echo "from_flag=from=${{ inputs.build-from }}" >> $GITHUB_OUTPUT
       shell: bash
 
     - id: build-and-push
@@ -56,5 +56,5 @@ runs:
         labels: ${{ env.GH_ACT_LAEBLS }}
         context: ${{ inputs.context }}
         tags: ${{ inputs.tags }}
-        build-args: ${{ steps.check-arg.outputs.from }}
+        build-args: ${{ steps.check-arg.outputs.from_flag }}
     
