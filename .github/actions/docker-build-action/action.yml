@@ -29,7 +29,7 @@ outputs:
     value: ${{ steps.build-and-push.outputs.metadata }}
   tags:
     description: 'tags'
-    value: ${{ steps.build-and-push.outputs.metadata }}
+    value: ${{ inputs.tags }}
   build_flag:
     description: 'build_flag'
     value: ${{ steps.check-arg.outputs.build_flag }}
@@ -62,7 +62,7 @@ runs:
         echo FORCE_BUILD_FLAG="${{env.FORCE_BUILD_FLAG}}"
         echo inputs.force-build="${{inputs.force-build}}"
         echo BUILD_FLAG=${{env.FORCE_BUILD_FLAG || inputs.force-build || contains(env.GH_ACT_MODIFIED_FILES, steps.check-arg.outputs.context_folder)}}
-        echo "build_flag="${BUILD_FLAG}"" >> $GITHUB_OUTPUT
+        echo "build_flag=${BUILD_FLAG}" >> $GITHUB_OUTPUT
 
         [ "${BUILD_FLAG}" != "true" ] ||  echo "✅ build image"
         [ "${BUILD_FLAG}" == "true" ] ||  echo "❌ not build image"
