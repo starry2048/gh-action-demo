@@ -17,14 +17,14 @@ on:
 
 
 env:
-  # BUILD_PROGRESS: plain
+  BUILD_PROGRESS: plain
   TZ: Asia/Shanghai
   DOCKER_REGISTRY: docker.io
   DOCKER_ORG: ristar20
   DOCKER_IMAGE_BASE: u20
   DOCKER_IMAGE_FULL_BASE: ristar20/u20
   USE_BUILDX: 1
-  # WITH_PUSH: true
+  WITH_PUSH: ${{ github.event_name == 'push' && (github.event.ref == 'refs/heads/u20' || (startsWith(github.event.ref, 'refs/tags/') && !startsWith(github.event.ref, 'refs/tags/ciflow/'))) }}
 
 jobs:
   # env_check:
