@@ -65,7 +65,7 @@ runs:
         echo "build_flag="${BUILD_FLAG}"" >> $GITHUB_OUTPUT
 
         [ "${BUILD_FLAG}" != "true" ] ||  echo "❌ not build image"
-        [ "${BUILD_FLAG}" == "true" ] ||  echo "✔️ build image"
+        [ "${BUILD_FLAG}" == "true" ] ||  echo "heavy_check_mark build image"
       shell: bash
 
     - run: |
