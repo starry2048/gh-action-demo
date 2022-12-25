@@ -5,7 +5,7 @@ run-name: ${{ github.actor }} is building docker-image 🚀
 on:
   # Compare the preceeding commit of main -> to the current commit of the main branch.
   # (Note: To compare changes between the last pushed commit to the remote main branch set `since_last_remote_commit: true`)
-  # push:
+  push:
   #   branches:
   #     - u20
   # Compare the last commit of main -> to the current commit of a PR branch. 
