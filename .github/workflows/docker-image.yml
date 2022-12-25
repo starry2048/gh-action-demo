@@ -5,9 +5,9 @@ run-name: ${{ github.actor }} is building docker-image 🚀
 on:
   # Compare the preceeding commit of main -> to the current commit of the main branch.
   # (Note: To compare changes between the last pushed commit to the remote main branch set `since_last_remote_commit: true`)
-  push:
-    # branches:
-    #   - u20
+  # push:
+  #   branches:
+  #     - u20
   # Compare the last commit of main -> to the current commit of a PR branch. 
   # (Note: To compare changes between the last pushed commit to the remote PR branch set `since_last_remote_commit: true`)
   # pull_request:
@@ -24,7 +24,7 @@ env:
   DOCKER_IMAGE_BASE: u20
   DOCKER_IMAGE_FULL_BASE: ristar20/u20
   USE_BUILDX: 1
-  WITH_PUSH: true
+  # WITH_PUSH: true
 
 jobs:
   # env_check:
@@ -93,13 +93,7 @@ jobs:
         id: test-out1
         run: |
           echo "${{ steps.meta.outputs.labels }}"
-      # - name: tmatrix
-      #   id: tmatrix
-      #   run: |
-      #     echo "matrix={\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}" >> $GITHUB_OUTPUT
-      # - name: read matrix
-      #   run: |
-      #     echo "${{ fromJSON(steps.tmatrix.outputs.matrix) }}"
+
       - name: set labels
         id: setlabels
         env:
@@ -111,18 +105,18 @@ jobs:
           vlabel="${{ env.label }}"
           echo vlabel="${vlabel}"
 
-          echo 'LABELS_GH_ACT<<EOF' >> $GITHUB_ENV
+          echo 'GH_ACT_LAEBLS<<EOF' >> $GITHUB_ENV
           echo "${vlabel}" >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
-          echo 'LABELS_GH_ACT<<EOF' >> $GITHUB_OUTPUT
+          echo 'GH_ACT_LAEBLS<<EOF' >> $GITHUB_OUTPUT
           echo "${vlabel}" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
 
       - name: echo labels
         run: |
-          echo "${{ env.LABELS_GH_ACT }}" 
-          echo "${{ steps.setlabels.outputs.LABELS_GH_ACT }}" 
+          echo "${{ env.GH_ACT_LAEBLS }}" 
+          echo "${{ steps.setlabels.outputs.GH_ACT_LAEBLS }}" 
 
       -
         name: Set up QEMU
@@ -140,16 +134,15 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
     
       -
-        name: Build and push ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl
         uses: docker/build-push-action@v3
         with:
-          context: 01.gl/
           push: ${{ env.WITH_PUSH == 'true' }}
-          labels: ${{ steps.setlabels.outputs.LABELS_GH_ACT }}
-          tags: ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl-dev
-          build-args: from=nvidia/cuda:11.7.0-cudnn8-devel-ubuntu20.04
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          labels: ${{ steps.setlabels.outputs.GH_ACT_LAEBLS }}
+          context: 01.gl/
+          tags: ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl
+          build-args: from=nvidia/cuda:11.7.0-cudnn8-devel-ubuntu20.04
           
       # - name: Run docker build / push
       #   # WITH_PUSH is used here to determine whether or not to add the --push flag

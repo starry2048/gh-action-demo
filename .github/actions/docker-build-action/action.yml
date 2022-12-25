@@ -1,0 +1,50 @@
+name: 'docker build light'
+description: 'docker build light'
+inputs:
+  context:  
+    description: 'context'
+    required: true
+    default: '.'
+  tags:  
+    description: 'tags'
+    required: true
+    default: ''
+  build-from:  
+    description: 'build from'
+    required: false
+    default: ''
+outputs: ${{ steps.build-and-push.outputs }}
+
+runs:
+  using: "composite"
+  steps:
+    - names: check required env variables
+      if: (env.GH_ACT_LAEBLS == "") || ( env.DOCKER_IMAGE_FULL_BASE =="")
+      run: |
+        echo "Please check the environment variables:"
+        echo env.GH_ACT_LAEBLS=${env.GH_ACT_LAEBLS}
+        echo env.DOCKER_IMAGE_FULL_BASE=${env.DOCKER_IMAGE_FULL_BASE}
+        exit 1
+      shell: bash
+    
+    - run: echo "Prepare to build image with tags: ${{}}"
+      shell: bash
+
+    - id: check-arg
+      run: |
+         [ "${{ inputs.build-from }}" != "" ] ||  echo "from=" >> $GITHUB_OUTPUT
+         [ "${{ inputs.build-from }}" == "" ] ||  echo "from=${{ inputs.build-from }}" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - id: build-and-push
+      uses: docker/build-push-action@v3
+      with:
+        if: ${{ inputs.build-from }} != ""
+        push: ${{ env.WITH_PUSH == 'true' }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        labels: ${{ env.GH_ACT_LAEBLS }}
+        context: ${{ inputs.context }}
+        tags: ${{ inputs.tags }}
+        build-args: ${{ steps.check-arg.outputs.from }}
+    
