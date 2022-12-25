@@ -13,7 +13,7 @@ inputs:
     description: 'build from'
     required: false
     default: ''
-outputs: ${{ steps.build-and-push.outputs }}
+# outputs: ${{ steps.build-and-push.outputs }}
 
 runs:
   using: "composite"
