@@ -100,13 +100,6 @@ jobs:
           echo "${vlabel}" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
 
-          json="${{ steps.meta.outputs.json }}"
-          echo json="${json}"
-
-
-          echo GH_ACT_META_JSON_001="${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}"
-          echo GH_ACT_META_JSON_000=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
-
           echo 'GH_ACT_META_JSON<<EOF' >> $GITHUB_ENV
           echo ${{ toJSON(steps.meta.outputs.json) }} >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
@@ -120,11 +113,6 @@ jobs:
           echo "${{ env.GH_ACT_LAEBLS }}" 
           echo "${{ steps.setlabels.outputs.GH_ACT_LAEBLS }}" 
 
-
-      - run: |
-          echo GH_ACT_META_JSON="${{ env.GH_ACT_META_JSON }}"
-
-          echo GH_ACT_META_JSON_003=${{ fromJSON(env.GH_ACT_META_JSON).labels['org.opencontainers.image.created'] }}
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
