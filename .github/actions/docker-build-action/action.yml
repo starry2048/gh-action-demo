@@ -73,9 +73,7 @@ runs:
         labels: |
           ${{ env.GH_ACT_LAEBLS }}
           con.image.build-from=${{ inputs.build-from }}
-          con.image.dockerfile.${{steps.check-arg.outputs.context_folder}}.created=${{ fromJSON(env.GH_ACT_META_JSON).labels['org.opencontainers.image.created'] }}
-          con.image.dockerfile.${{steps.check-arg.outputs.context_folder}}.version=${{ fromJSON(env.GH_ACT_META_JSON).labels['org.opencontainers.image.version'] }}
-          con.image.dockerfile.${{steps.check-arg.outputs.context_folder}}.revision=${{ fromJSON(env.GH_ACT_META_JSON).labels['org.opencontainers.image.revision'] }}
+
         context: ${{ inputs.context }}
         tags: ${{ inputs.tags }}
         build-args: ${{ steps.check-arg.outputs.from_flag }}
