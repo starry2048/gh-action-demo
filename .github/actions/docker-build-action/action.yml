@@ -60,7 +60,7 @@ runs:
       shell: bash
     - id: check-build
       run: |
-        echo contain_flag="${{ contains(env.GH_ACT_MODIFIED_FILES, steps.check-arg.outputs.context_folder ) }}""
+        echo contain_flag="${{ contains(env.GH_ACT_MODIFIED_FILES, steps.check-arg.outputs.context_folder ) }}"
 
         echo env.GH_ACT_MODIFIED_FILES="${{env.GH_ACT_MODIFIED_FILES}}"
         echo context_folder="${context_folder}"
