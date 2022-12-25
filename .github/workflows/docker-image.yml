@@ -123,12 +123,19 @@ jobs:
         run: |
           echo "${{ env.GH_ACT_LAEBLS }}" 
           echo "${{ steps.setlabels.outputs.GH_ACT_LAEBLS }}" 
+
+      - 
+        run: |
+          echo GH_ACT_META_JSON_000=${{ env.GH_ACT_META_JSON.labels['org.opencontainers.image.created'] }}
+ 
+      - 
+        run: |         
+          echo GH_ACT_META_JSON_001=${{ env.GH_ACT_META_JSON1.labels['org.opencontainers.image.created'] }}
+
       - run: |
           echo GH_ACT_META_JSON=${{ env.GH_ACT_META_JSON }}
 
-          echo GH_ACT_META_JSON_000=${{ env.GH_ACT_META_JSON.labels['org.opencontainers.image.created'] }}
-          echo GH_ACT_META_JSON_001=${{ env.GH_ACT_META_JSON1.labels['org.opencontainers.image.created'] }}
-
+     
           echo GH_ACT_META_JSON_002=${{ fromJSON(env.GH_ACT_META_JSON1).labels['org.opencontainers.image.created'] }}
           echo GH_ACT_META_JSON_003=${{ fromJSON(env.GH_ACT_META_JSON).labels['org.opencontainers.image.created'] }}
       -
