@@ -111,8 +111,8 @@ jobs:
           echo ${{ toJSON(steps.meta.outputs.json) }} >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
-          echo 'GH_ACT_META_JSON_L<<EOF' >> $GITHUB_ENV
-          echo "${{ fromJSON(steps.meta.outputs.json) }}" >> $GITHUB_ENV
+          echo 'GH_ACT_META_JSON1<<EOF' >> $GITHUB_ENV
+          echo ${{ toJSON(steps.meta.outputs.json) }} >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
           echo 'GH_ACT_MODIFIED_FILES<<EOF' >> $GITHUB_ENV
@@ -127,6 +127,7 @@ jobs:
           echo GH_ACT_META_JSON=${{ env.GH_ACT_META_JSON }}
 
           echo GH_ACT_META_JSON_000=${{ env.GH_ACT_META_JSON.labels['org.opencontainers.image.created'] }}
+          echo GH_ACT_META_JSON_001=${{ env.GH_ACT_META_JSON1.labels['org.opencontainers.image.created'] }}
 
           echo GH_ACT_META_JSON_002=${{ fromJSON(env.GH_ACT_META_JSON).labels['org.opencontainers.image.created'] }}
       -
