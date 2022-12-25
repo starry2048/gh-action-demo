@@ -25,7 +25,7 @@ env:
   DOCKER_IMAGE_FULL_BASE: ristar20/u20
   USE_BUILDX: 1
   WITH_PUSH: ${{ ((github.event_name == 'push') || (github.event_name == 'workflow_dispatch') ) && ((github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/u20' || (startsWith(github.event.ref, 'refs/tags/') && !startsWith(github.event.ref, 'refs/tags/ciflow/'))) ) }}
-  FORCE_BUILD_FLAG: $${ env.WITH_PUSH && (github.event_name == 'workflow_dispatch') }}
+  FORCE_BUILD_FLAG: ${{ env.WITH_PUSH && (github.event_name == 'workflow_dispatch') }}
 
 jobs:
   build:
