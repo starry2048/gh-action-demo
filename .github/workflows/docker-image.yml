@@ -111,10 +111,6 @@ jobs:
           echo ${{ toJSON(steps.meta.outputs.json) }} >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
-          echo 'GH_ACT_META_JSON1<<EOF' >> $GITHUB_ENV
-          echo ${{ steps.meta.outputs.json }} >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-
           echo 'GH_ACT_MODIFIED_FILES<<EOF' >> $GITHUB_ENV
           echo "${{ steps.changed-files-dir-names.outputs.modified_files }}" >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
@@ -128,8 +124,6 @@ jobs:
       - run: |
           echo GH_ACT_META_JSON="${{ env.GH_ACT_META_JSON }}"
 
-     
-          echo GH_ACT_META_JSON_002=${{ fromJSON(env.GH_ACT_META_JSON1).labels['org.opencontainers.image.created'] }}
           echo GH_ACT_META_JSON_003=${{ fromJSON(env.GH_ACT_META_JSON).labels['org.opencontainers.image.created'] }}
       -
         name: Set up QEMU
