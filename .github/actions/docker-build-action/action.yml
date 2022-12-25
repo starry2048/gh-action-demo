@@ -75,6 +75,6 @@ runs:
           con.image.build-from=${{ inputs.build-from }}
 
         context: ${{ inputs.context }}
-        tags: ${{ inputs.tags }}
+        tags: ${{ inputs.tags }}_v${{ env.BUILD_TIME_S }}
         build-args: ${{ steps.check-arg.outputs.from_flag }}
     
