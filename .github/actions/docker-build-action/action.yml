@@ -61,7 +61,6 @@ runs:
     - run: |
         echo "${{ steps.changed-files-dir-names.outputs.modified_files }}"
       shell: bash
-      shell: bash
     - run: |
         echo "${{ steps.meta.outputs.json }}"
       shell: bash
