@@ -45,10 +45,17 @@ runs:
       run: |
          [ "${{ inputs.build-from }}" != "" ] ||  echo "from_flag=" >> $GITHUB_OUTPUT
          [ "${{ inputs.build-from }}" == "" ] ||  echo "from_flag=from=${{ inputs.build-from }}" >> $GITHUB_OUTPUT
+
+         context_folder=$(echo "${{inputs.context}}" | s/\/$//)
+         echo "context_folder="${context_folder}"" >> $GITHUB_OUTPUT
       shell: bash
+    
+    - run: |
+        echo "${{ steps.check-arg.outputs.context_folder }}"
 
     - id: build-and-push
       uses: docker/build-push-action@v3
+      if: contains(steps.changed-files-dir-names.outputs.modified_files, '00.cuda')
       with:
         push: ${{ env.WITH_PUSH == 'true' }}
         cache-from: type=gha

@@ -84,16 +84,6 @@ jobs:
           images: |
             name/app
 
-      - name: test out
-        id: test-out
-        run: |
-          echo ${{ steps.meta.outputs.json }}
-
-      - name: test out1
-        id: test-out1
-        run: |
-          echo "${{ steps.meta.outputs.labels }}"
-
       - name: set labels
         id: setlabels
         env:
@@ -101,6 +91,8 @@ jobs:
             org.opencontainers.image.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
             org.opencontainers.image.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
             org.opencontainers.image.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
+            con.image.build.time_cn=$BUILD_TIME
+            con.image.build.host=github_action
         run: |
           vlabel="${{ env.label }}"
           echo vlabel="${vlabel}"
