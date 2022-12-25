@@ -1,5 +1,5 @@
-name: 'docker build light'
-description: 'docker build light'
+name: 'docker build action'
+description: 'docker build action'
 inputs:
   context:  
     description: 'context'
@@ -58,9 +58,8 @@ runs:
     #   shell: bash
 
     - id: build-and-push
-      name: docker/build-push-action
       uses: docker/build-push-action@v3
-      if: inputs.force-build || contains(steps.changed-files-dir-names.outputs.modified_files, steps.check-arg.outputs.context_folder)
+      if: env.FORCE_BUILD_FLAG || inputs.force-build || contains(steps.changed-files-dir-names.outputs.modified_files, steps.check-arg.outputs.context_folder)
       with:
         push: ${{ env.WITH_PUSH == 'true' }}
         cache-from: type=gha
