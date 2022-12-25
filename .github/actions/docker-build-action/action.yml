@@ -66,7 +66,7 @@ runs:
     - run: |
         echo FORCE_BUILD_FLAG="${{env.FORCE_BUILD_FLAG}}"
         echo inputs.force-build="${{inputs.force-build}}"
-        echo env.GH_ACT_MODIFIED_FILES="${{env.FORCE_BUILD_FLAG}}"
+        echo env.GH_ACT_MODIFIED_FILES="${{env.GH_ACT_MODIFIED_FILES}}"
         echo context_folder=${{steps.check-arg.outputs.context_folder}}
         echo FLAG=${{env.FORCE_BUILD_FLAG || inputs.force-build || contains(env.GH_ACT_MODIFIED_FILES, steps.check-arg.outputs.context_folder)}}
       shell: bash
