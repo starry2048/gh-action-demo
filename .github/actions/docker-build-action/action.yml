@@ -51,8 +51,6 @@ runs:
 
          context_folder=$(echo "${{inputs.context}}" | sed 's/\/$//')
          echo "context_folder="${context_folder}"" >> $GITHUB_OUTPUT
-
-         echo "context_folder="${context_folder}"" >> $GITHUB_OUTPUT
       shell: bash
     
     - run: |

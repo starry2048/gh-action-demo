@@ -101,7 +101,7 @@ jobs:
           echo 'EOF' >> $GITHUB_OUTPUT
 
           echo 'GH_ACT_META_JSON<<EOF' >> $GITHUB_ENV
-          echo "${{ steps.meta.outputs.json }}" >> $GITHUB_ENV
+          echo ${{ steps.meta.outputs.json }} >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
           echo 'GH_ACT_META_JSON_L<<EOF' >> $GITHUB_ENV
