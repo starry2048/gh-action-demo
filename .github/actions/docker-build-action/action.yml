@@ -55,9 +55,16 @@ runs:
          echo "context_folder="${context_folder}"" >> $GITHUB_OUTPUT
       shell: bash
     
-    # - run: |
-    #     echo "${{ steps.check-arg.outputs.context_folder }}"
-    #   shell: bash
+    - run: |
+        echo "${{ steps.check-arg.outputs.context_folder }}"
+      shell: bash
+    - run: |
+        echo "${{ steps.changed-files-dir-names.outputs.modified_files }}"
+      shell: bash
+      shell: bash
+    - run: |
+        echo "${{ steps.meta.outputs.json }}"
+      shell: bash
 
     - id: build-and-push
       uses: docker/build-push-action@v3
