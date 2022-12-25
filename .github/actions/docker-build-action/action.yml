@@ -51,6 +51,8 @@ runs:
 
          context_folder=$(echo "${{inputs.context}}" | sed 's/\/$//')
          echo "context_folder="${context_folder}"" >> $GITHUB_OUTPUT
+
+         echo "context_folder="${context_folder}"" >> $GITHUB_OUTPUT
       shell: bash
     
     # - run: |
@@ -64,7 +66,12 @@ runs:
         push: ${{ env.WITH_PUSH == 'true' }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        labels: ${{ env.GH_ACT_LAEBLS }}
+        labels: |
+          ${{ env.GH_ACT_LAEBLS }}
+          con.image.build-from=${{ inputs.build-from }}
+          con.image.dockerfile.${{steps.check-arg.outputs.context_folder}}.created=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
+          con.image.dockerfile.${{steps.check-arg.outputs.context_folder}}.version=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+          con.image.dockerfile.${{steps.check-arg.outputs.context_folder}}.revision=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
         context: ${{ inputs.context }}
         tags: ${{ inputs.tags }}
         build-args: ${{ steps.check-arg.outputs.from_flag }}
