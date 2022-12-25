@@ -129,7 +129,8 @@ jobs:
           echo GH_ACT_META_JSON_000=${{ env.GH_ACT_META_JSON.labels['org.opencontainers.image.created'] }}
           echo GH_ACT_META_JSON_001=${{ env.GH_ACT_META_JSON1.labels['org.opencontainers.image.created'] }}
 
-          echo GH_ACT_META_JSON_002=${{ fromJSON(env.GH_ACT_META_JSON).labels['org.opencontainers.image.created'] }}
+          echo GH_ACT_META_JSON_002=${{ fromJSON(env.GH_ACT_META_JSON1).labels['org.opencontainers.image.created'] }}
+          echo GH_ACT_META_JSON_003=${{ fromJSON(env.GH_ACT_META_JSON).labels['org.opencontainers.image.created'] }}
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
