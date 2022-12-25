@@ -112,7 +112,7 @@ jobs:
           echo 'EOF' >> $GITHUB_ENV
 
           echo 'GH_ACT_META_JSON1<<EOF' >> $GITHUB_ENV
-          echo ${{ toJSON(steps.meta.outputs.json) }} >> $GITHUB_ENV
+          echo ${{ steps.meta.outputs.json }} >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
           echo 'GH_ACT_MODIFIED_FILES<<EOF' >> $GITHUB_ENV
