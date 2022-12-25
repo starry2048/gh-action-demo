@@ -62,11 +62,12 @@ runs:
         echo inputs.force-build="${{inputs.force-build}}"
         echo env.GH_ACT_MODIFIED_FILES="${{env.GH_ACT_MODIFIED_FILES}}"
         echo context_folder=${{steps.check-arg.outputs.context_folder}}
+      shell: bash
+    - run: |
         echo BUILD_FLAG=${{env.FORCE_BUILD_FLAG || inputs.force-build || contains(env.GH_ACT_MODIFIED_FILES, steps.check-arg.outputs.context_folder)}}
 
-        echo "build_flag=${BUILD_FLAG}">>$GITHUB_OUTPUT
+        echo "build_flag="${BUILD_FLAG}"" >> $GITHUB_OUTPUT
       shell: bash
-    
     - run: |
         echo context_folder="${{ steps.check-arg.outputs.context_folder }}"
         echo build_flag="${{ steps.check-arg.outputs.build_flag }}"
