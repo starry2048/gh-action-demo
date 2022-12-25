@@ -27,7 +27,13 @@ outputs:
   metadata:
     description: 'Build result metadata'
     value: ${{ steps.build-and-push.outputs.metadata }}
-
+  tags:
+    description: 'tags'
+    value: ${{ steps.build-and-push.outputs.metadata }}
+  build_flag:
+    description: 'build_flag'
+    value: ${{ steps.check-arg.outputs.build_flag }}
+  
 runs:
   using: "composite"
   steps:
@@ -51,25 +57,23 @@ runs:
 
          context_folder=$(echo "${{inputs.context}}" | sed 's/\/$//')
          echo "context_folder="${context_folder}"" >> $GITHUB_OUTPUT
-      shell: bash
-    
-    - run: |
-        echo "${{ steps.check-arg.outputs.context_folder }}"
-      shell: bash
-    - run: |
-        echo "${{ env.GH_ACT_MODIFIED_FILES }}"
-      shell: bash
-    - run: |
-        echo "${{ env.GH_ACT_META_JSON }}"
-      shell: bash
 
-    - run: |
         echo FORCE_BUILD_FLAG="${{env.FORCE_BUILD_FLAG}}"
         echo inputs.force-build="${{inputs.force-build}}"
         echo env.GH_ACT_MODIFIED_FILES="${{env.GH_ACT_MODIFIED_FILES}}"
         echo context_folder=${{steps.check-arg.outputs.context_folder}}
-        echo FLAG=${{env.FORCE_BUILD_FLAG || inputs.force-build || contains(env.GH_ACT_MODIFIED_FILES, steps.check-arg.outputs.context_folder)}}
+        echo BUILD_FLAG=${{env.FORCE_BUILD_FLAG || inputs.force-build || contains(env.GH_ACT_MODIFIED_FILES, steps.check-arg.outputs.context_folder)}}
+
+        echo "build_flag=${BUILD_FLAG}">>$GITHUB_OUTPUT
       shell: bash
+    
+    - run: |
+        echo context_folder="${{ steps.check-arg.outputs.context_folder }}"
+        echo build_flag="${{ steps.check-arg.outputs.build_flag }}"
+        echo GH_ACT_MODIFIED_FILES="${{ env.GH_ACT_MODIFIED_FILES }}"
+        echo GH_ACT_META_JSON="${{ env.GH_ACT_META_JSON }}"
+      shell: bash
+
 
     - id: build-and-push
       uses: docker/build-push-action@v3
@@ -82,9 +86,11 @@ runs:
           con.image.build-from=${{ inputs.build-from }}
 
         context: ${{ inputs.context }}
-        tags: ${{ inputs.tags }}_v${{ env.BUILD_TIME_S }}
+        tags: |
+          ${{ inputs.tags }}
+          ${{ inputs.tags }}_v${{ env.BUILD_TIME_S }}
         build-args: ${{ steps.check-arg.outputs.from_flag }}
-      if: ${{ env.FORCE_BUILD_FLAG || inputs.force-build || contains(env.GH_ACT_MODIFIED_FILES, steps.check-arg.outputs.context_folder) }}
+      if: ${{ steps.check-arg.outputs.build_flag == 'true' }}
     
     - run: |
         echo imageid="${{steps.build-and-push.outputs.imageid}}"
