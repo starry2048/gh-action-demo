@@ -133,7 +133,7 @@ jobs:
           echo GH_ACT_META_JSON_001=${{ env.GH_ACT_META_JSON1.labels['org.opencontainers.image.created'] }}
 
       - run: |
-          echo GH_ACT_META_JSON=${{ env.GH_ACT_META_JSON }}
+          echo GH_ACT_META_JSON="${{ env.GH_ACT_META_JSON }}"
 
      
           echo GH_ACT_META_JSON_002=${{ fromJSON(env.GH_ACT_META_JSON1).labels['org.opencontainers.image.created'] }}
