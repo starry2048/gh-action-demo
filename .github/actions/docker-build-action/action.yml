@@ -14,6 +14,16 @@ inputs:
     required: false
     default: ''
 # outputs: ${{ steps.build-and-push.outputs }}
+outputs:
+  imageid:
+    description: 'Image ID'
+    value: ${{ steps.build-and-push.outputs.imageid }}
+  digest:
+    description: 'Image digest'
+    value: ${{ steps.build-and-push.outputs.digest }}
+  metadata:
+    description: 'Build result metadata'
+    value: ${{ steps.build-and-push.outputs.metadata }}
 
 runs:
   using: "composite"
@@ -27,7 +37,8 @@ runs:
         exit 1
       shell: bash
     
-    - run: echo "Prepare to build image with tags: ${{ inputs.tags }}"
+    - run: |
+        echo "Prepare to build image with tags: ${{ inputs.tags }}"
       shell: bash
 
     - id: check-arg
