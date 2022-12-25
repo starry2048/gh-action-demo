@@ -26,7 +26,7 @@ env:
   USE_BUILDX: 1
   WITH_PUSH: ${{ ((github.event_name == 'push') || (github.event_name == 'workflow_dispatch') ) && ((github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/u20' || (startsWith(github.event.ref, 'refs/tags/') && !startsWith(github.event.ref, 'refs/tags/ciflow/'))) ) }}
   FORCE_BUILD_FLAG: 
-    ${{ WITH_PUSH && (github.event_name == 'workflow_dispatch') }}
+    ${{ env.WITH_PUSH && (github.event_name == 'workflow_dispatch') }}
 
 jobs:
   build:
