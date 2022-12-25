@@ -18,7 +18,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - names: check required env variables
+    - name: check required env variables
       if: (env.GH_ACT_LAEBLS == "") || ( env.DOCKER_IMAGE_FULL_BASE =="")
       run: |
         echo "Please check the environment variables:"
