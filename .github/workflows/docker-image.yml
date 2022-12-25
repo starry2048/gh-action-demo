@@ -127,17 +127,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - id: build_01
         uses: ./.github/actions/docker-build-action
         with:
           context: 01.gl/
           tags: ${{ env.DOCKER_IMAGE_FULL_BASE }}-cuda:cuda11.7-cudnn8-gl
           build-from: nvidia/cuda:11.7.0-cudnn8-devel-ubuntu20.04
-      - 
-        run: |
-          echo "${{ steps.build_01.outputs.imageid }}" 
-          echo "${{ steps.build_01.outputs.digest }}" 
-          echo "${{ steps.build_01.outputs.metadata }}" 
+      - id: build_
       # -
       #   uses: docker/build-push-action@v3
       #   with:
