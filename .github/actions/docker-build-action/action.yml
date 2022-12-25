@@ -29,7 +29,7 @@ runs:
   using: "composite"
   steps:
     - name: check required env variables
-      if: (( ${{ env.GH_ACT_LAEBLS }} == "") || ( ${{ env.DOCKER_IMAGE_FULL_BASE }} ==""))
+      if: ${{ (env.GH_ACT_LAEBLS== "") || ( env.DOCKER_IMAGE_FULL_BASE =="") }}
       run: |
         echo "Please check the environment variables:"
         echo env.GH_ACT_LAEBLS=${env.GH_ACT_LAEBLS}
