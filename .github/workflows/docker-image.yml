@@ -100,6 +100,8 @@ jobs:
           echo "${vlabel}" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
 
+          json="${{ steps.meta.outputs.json }}"
+          echo json="${json}"
           echo 'GH_ACT_META_JSON<<EOF' >> $GITHUB_ENV
           echo ${{ steps.meta.outputs.json }} >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
