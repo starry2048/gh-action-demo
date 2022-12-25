@@ -63,6 +63,14 @@ runs:
         echo "${{ env.GH_ACT_META_JSON }}"
       shell: bash
 
+    - run: |
+        echo FORCE_BUILD_FLAG="${{env.FORCE_BUILD_FLAG}}"
+        echo inputs.force-build="${{inputs.force-build}}"
+        echo env.GH_ACT_MODIFIED_FILES="${{env.FORCE_BUILD_FLAG}}"
+        echo context_folder=${{steps.check-arg.outputs.context_folder}}
+        echo FLAG=${{env.FORCE_BUILD_FLAG || inputs.force-build || contains(env.GH_ACT_MODIFIED_FILES, steps.check-arg.outputs.context_folder)}}
+      shell: bash
+
     - id: build-and-push
       uses: docker/build-push-action@v3
       if: env.FORCE_BUILD_FLAG || inputs.force-build || contains(env.GH_ACT_MODIFIED_FILES, steps.check-arg.outputs.context_folder)
@@ -78,3 +86,8 @@ runs:
         tags: ${{ inputs.tags }}_v${{ env.BUILD_TIME_S }}
         build-args: ${{ steps.check-arg.outputs.from_flag }}
     
+    - run: |
+        echo imageid="${{steps.build-and-push.outputs.imageid}}"
+        echo digest="${{steps.build-and-push.outputs.digest}}"
+        echo metadata="${{steps.build-and-push.outputs.metadata}}"
+      shell: bash
