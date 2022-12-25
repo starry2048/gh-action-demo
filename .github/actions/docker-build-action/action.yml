@@ -50,7 +50,6 @@ runs:
     - id: build-and-push
       uses: docker/build-push-action@v3
       with:
-        if: ${{ inputs.build-from }} != ""
         push: ${{ env.WITH_PUSH == 'true' }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
