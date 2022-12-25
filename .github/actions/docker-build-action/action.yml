@@ -64,8 +64,8 @@ runs:
         echo BUILD_FLAG=${{env.FORCE_BUILD_FLAG || inputs.force-build || contains(env.GH_ACT_MODIFIED_FILES, steps.check-arg.outputs.context_folder)}}
         echo "build_flag="${BUILD_FLAG}"" >> $GITHUB_OUTPUT
 
-        [ "${BUILD_FLAG}" != "true" ] ||  echo "❌ not build image"
-        [ "${BUILD_FLAG}" == "true" ] ||  echo "✅ build image"
+        [ "${BUILD_FLAG}" != "true" ] ||  echo "✅ build image"
+        [ "${BUILD_FLAG}" == "true" ] ||  echo "❌ not build image"
       shell: bash
 
     - run: |
