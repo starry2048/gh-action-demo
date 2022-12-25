@@ -58,10 +58,10 @@ runs:
         context_folder=$(echo "${{inputs.context}}" | sed 's/\/$//')
         echo "context_folder="${context_folder}"" >> $GITHUB_OUTPUT
 
-        build_flag=${{env.FORCE_BUILD_FLAG || inputs.force-build || contains(env.GH_ACT_MODIFIED_FILES, steps.check-arg.outputs.context_folder)}}
+        build_flag=${{env.FORCE_BUILD_FLAG || inputs.force-build || contains(env.GH_ACT_MODIFIED_FILES, context_folder)}}
         echo "build_flag=${build_flag}" >> $GITHUB_OUTPUT
 
-        echo contain_flag="${{ contains(env.GH_ACT_MODIFIED_FILES, steps.check-arg.outputs.context_folder}}""
+        echo contain_flag="${{ contains(env.GH_ACT_MODIFIED_FILES, context_folder) }}""
 
         echo env.GH_ACT_MODIFIED_FILES="${{env.GH_ACT_MODIFIED_FILES}}"
         echo context_folder="${context_folder}"
